@@ -7,8 +7,9 @@ type Query {
 }
 type Mutation {
   createUser(username: String!,password:String!): User!
-  saveRecipe(userId:String!,recipeId:String!): Recipes
-  deleteRecipe(userId:String!,recipeId:String!):Recipes
+  saveRecipe(userId:String!,recipeId:Int): Recipes
+  deleteRecipe(userId:String!,recipeId:Int):Recipes
+  signInUser:User
 }
 type User{
   username: String!
