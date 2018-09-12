@@ -1,5 +1,5 @@
 const User = require('./models/users');
-
+const Recipe = require ('./models/recipes');
 const resolvers = {
   Query: {
     allUsers: async (parent, args, context,info) => {
@@ -9,7 +9,13 @@ const resolvers = {
         x.id = x._id.toString();
         return x;
       });
-    }, 
+    },
+    recipesForUser: async (parent, args, context,info) => {
+      const recipes = await Recipe.find()
+      .where({userId:args.userId})
+      .sort({ 'updatedAt': 'desc' });
+      return recipes.map(x=>x);
+    } 
   },
   Mutation: {
     createUser: async (parent, args, context,info) => {
