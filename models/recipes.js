@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 const recipeSchema = mongoose.Schema({
   recipeId: Number,
-  userId: { type: mongoose.Schema.Types.ObjectId, 
+  userId: {  
+    type: mongoose.Schema.Types.ObjectId, 
     ref: 'User', required: true }
 }, { timestamps: true});
 

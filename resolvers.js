@@ -1,20 +1,27 @@
-export default {
+const User = require('./models/users');
+
+const resolvers = {
   Query: {
-    allCats: async (parent, args, { Cat }) => {
+    allUsers: async (parent, args, context,info) => {
       // { _id: 123123, name: "whatever"}
-      const cats = await Cat.find();
-      return cats.map((x) => {
-        x._id = x._id.toString();
+      const users = await User.find();
+      return users.map((x) => {
+        x.id = x._id.toString();
         return x;
       });
-    },
+    }, 
   },
   Mutation: {
-    createCat: async (parent, args, { Cat }) => {
+    createUser: async (parent, args, context,info) => {
       // { _id: 123123, name: "whatever"}
-      const kitty = await new Cat(args).save();
-      kitty._id = kitty._id.toString();
-      return kitty;
+      const digest = await User.hashPassword(args.password)
+      const user = await User.create({
+        username:args.username,
+        password: digest,        
+      });      
+      return user;     
     },
+  
   },
 };
+module.exports = resolvers;

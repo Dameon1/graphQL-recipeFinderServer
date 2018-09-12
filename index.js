@@ -1,31 +1,20 @@
 'use strict';
-const { ApolloServer, gql } = require('apollo-server');
-import express from 'express';
-import bodyParser from 'body-parser';
-
-import { makeExecutableSchema } from 'graphql-tools';
-import mongoose from 'mongoose';
-
-import typeDefs from './schema';
-import resolvers from './resolvers';
-
-
 require('dotenv').config();
+const { ApolloServer, gql } = require('apollo-server');
+//const bodyParser = require('body-parser');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers');
 const express = require('express');
-
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
-const {router: recipeRouter} = require('./routes/recipes');
+//const {router: recipeRouter} = require('./routes/recipes');
 const { PORT, CLIENT_ORIGIN ,MONGODB_URI} = require('./config');
-const {router: usersRouter} = require('./routes/users');
-const {router: authRouter} = require('./routes/auth');
-
+//const {router: usersRouter} = require('./routes/users');
+//const {router: authRouter} = require('./routes/auth');
 const jwtStrategy = require('./passport/jwt');
-
-
 passport.use(jwtStrategy);
 
 app.use(express.json());
@@ -56,7 +45,7 @@ if (require.main === module) {
     console.error(err);
   });
 }
-module.exports = { app };
+
 // mongoose.connect('mongodb://localhost/test');
 
 // const Cat = mongoose.model('Cat', { name: String });
@@ -77,3 +66,4 @@ const server = new ApolloServer({
 server.listen({ port: 4001 }).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
+module.exports = { app };
