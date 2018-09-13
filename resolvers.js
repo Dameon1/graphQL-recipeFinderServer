@@ -1,5 +1,10 @@
 const User = require('./models/users');
 const Recipe = require ('./models/recipes');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const options = {session: false, failWithError: true};
+const localAuth = passport.authenticate('local', options);
+const {JWT_SECRET,JWT_EXPIRY} = require('./config');
 const resolvers = {
   Query: {
     allUsers: async (parent, args, context,info) => {
@@ -28,9 +33,21 @@ const resolvers = {
       return user;     
     },
     signInUser: async (parent,{password ,username}, context,info) =>{
-      let digest = await User.hashPassword(password);
-      
-    },
+      // let digest = await User.hashPassword(password);
+      // let userPassword = await User.validatePassword(password);
+      // if(digest === userPassword){console.log('True')}
+      // const createAuthToken = (userName) => {
+      //   return jwt.sign({userName}, JWT_SECRET, {
+      //     subject: userName,
+      //     expiresIn: JWT_EXPIRY,
+      //     algorithm: 'HS256'
+        });
+      };
+            
+      return this.username
+        // const authToken = await createAuthToken(username);
+        // return {authToken, username};
+      },
     saveRecipe: async (parent, { recipeId,userId }, context,info) => {
       const recipe = await Recipe.create({ recipeId, userId })
       return recipe

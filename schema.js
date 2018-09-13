@@ -9,7 +9,7 @@ type Mutation {
   createUser(username: String!,password:String!): User!
   saveRecipe(userId:String!,recipeId:Int): Recipes
   deleteRecipe(userId:String!,recipeId:Int):Recipes
-  signInUser:User
+  signInUser(username: String!,password:String!):User!
 }
 type User{
   username: String!
