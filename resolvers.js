@@ -2,6 +2,7 @@ const User = require('./models/users');
 const Recipe = require ('./models/recipes');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const { Strategy: LocalStrategy } = require('passport-local');
 const options = {session: false, failWithError: true};
 const localAuth = passport.authenticate('local', options);
 const {JWT_SECRET,JWT_EXPIRY} = require('./config');
@@ -33,21 +34,28 @@ const resolvers = {
       return user;     
     },
     signInUser: async (parent,{password ,username}, context,info) =>{
-      // let digest = await User.hashPassword(password);
-      // let userPassword = await User.validatePassword(password);
-      // if(digest === userPassword){console.log('True')}
-      // const createAuthToken = (userName) => {
-      //   return jwt.sign({userName}, JWT_SECRET, {
-      //     subject: userName,
-      //     expiresIn: JWT_EXPIRY,
-      //     algorithm: 'HS256'
-        });
-      };
-            
-      return this.username
-        // const authToken = await createAuthToken(username);
-        // return {authToken, username};
-      },
+      let digest = await User.hashPassword(password);
+      let user = await User
+      .findOne({ username })
+      .then(async results => {
+        let user = results;
+        if (!user) {
+          return Promise.reject({
+            reason: 'LoginError',
+            message: 'Incorrect username',
+            location: 'username'
+          });
+      }
+      let isValid = await user.validatePassword(password)
+      return isValid
+    })
+      .catch(err => {
+          if (err.reason === 'LoginError') {
+            return false;
+          }});
+          console.log(user);
+         if (user) { return {username,password} }
+        },
     saveRecipe: async (parent, { recipeId,userId }, context,info) => {
       const recipe = await Recipe.create({ recipeId, userId })
       return recipe
