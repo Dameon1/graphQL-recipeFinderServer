@@ -3,7 +3,10 @@ const {  gql } = require('apollo-server');
 const typeDefs = gql`
 type Query {
   allUsers: [User!]!
-  recipesForUser(userId:ID!): [Recipes]
+  recipesForUser(userId:ID!): [UserRecipes]
+  fetchRecipesFromSpoonacular(queryString:String):String
+  fetchRecipesFromSpoonacularById:[Recipes]
+  fetchRecipesFromSpoonacularInBulk:[Recipes]
 }
 type Mutation {
   createUser(username: String!,password:String!): User!
@@ -16,10 +19,16 @@ type User{
   id:String
   password:String 
 }
-type Recipes {
+type UserRecipes {
   _id:String!
   recipeId: Int
   createdAt: String 
+}
+type Recipes {
+  property:String
+  prop2:String
+  prop3:String
+  prop4:String
 }
 `;
 module.exports = typeDefs;

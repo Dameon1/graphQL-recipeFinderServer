@@ -6,7 +6,7 @@
 // Create Resolvers for requests
 //
 
-
+//Get ALL user recipes from DB
 export const fetchRecipeIdsFromDatabase = (userId,authToken) => (dispatch) => {
   dispatch(fetchRecipesFromDatabaseRequest());
   return fetch(`${API_BASE_URL}/api/recipes/?userId=${userId}`,{
@@ -17,7 +17,7 @@ export const fetchRecipeIdsFromDatabase = (userId,authToken) => (dispatch) => {
   .then(recipes => dispatch(fetchRecipesFromDatabaseSuccess(recipes)))
   .catch(error => dispatch(fetchRecipesFromDatabaseError(error)));
 }
-
+//Save recipe to DB
 export const postRecipeToDatabase = (recipeId,userId,authToken) => (dispatch) => {
   dispatch(postRecipeToDatabaseRequest());
   return fetch(`${API_BASE_URL}/api/recipes`, {
@@ -36,7 +36,7 @@ export const postRecipeToDatabase = (recipeId,userId,authToken) => (dispatch) =>
   .then(response => dispatch(postRecipeToDatabaseSuccess()))
   .catch(error => dispatch(postRecipeToDataBaseError(error)));
 };
-
+//Delete recipe from DB
 export const removeRecipeFromDatabase = (id,userId,authToken) => (dispatch) => {
   dispatch(removeRecipeFromDatabaseRequest());
   return fetch(`${API_BASE_URL}/api/recipes/${id}`, {
@@ -52,6 +52,7 @@ export const removeRecipeFromDatabase = (id,userId,authToken) => (dispatch) => {
   .catch(error => dispatch(fetchRecipesFromDatabaseError(error)));
 };
 
+//Create string to send to Spoonacular for users' saved recipes
 export const getUserRecipesInBulkFromSpoonacular = (recipes) => (dispatch) => {
 
   let recipeBulkString="";
@@ -63,6 +64,7 @@ export const getUserRecipesInBulkFromSpoonacular = (recipes) => (dispatch) => {
   dispatch(fetchRecipesFromSpoonacularInBulk(recipeString))
 };
 
+//Normal search for recipes  -- Non-User
 export const fetchRecipesFromSpoonacular = (queryString) => (dispatch) =>  {
   dispatch(fetchRecipesFromSpoonacularRequest());    
   return fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=20&ranking=1`, {
@@ -80,6 +82,7 @@ export const fetchRecipesFromSpoonacular = (queryString) => (dispatch) =>  {
   .catch(error => dispatch(fetchRecipesFromSpoonacularError(error)));
 };
 
+//Recipe search by Id
 export const fetchRecipesFromSpoonacularById = (id) => (dispatch) => {
   dispatch(fetchSingleRecipeFromFromSpoonacularRequest());
   return fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`, {
@@ -96,6 +99,8 @@ export const fetchRecipesFromSpoonacularById = (id) => (dispatch) => {
   .then(recipe =>  dispatch(fetchSingleRecipeFromSpoonacularSuccess(recipe)))
   .catch(error => dispatch(fetchSingleRecipeFromSpoonacularError(error)));
 };
+
+//Recipe search for Users saved recipes.
 export const fetchRecipesFromSpoonacularInBulk = (idString) => (dispatch) => {
   dispatch(fetchRecipesInbulkFromSpoonacularRequest());
   return fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`, {
