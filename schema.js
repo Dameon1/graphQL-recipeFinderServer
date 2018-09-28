@@ -4,8 +4,8 @@ const typeDefs = gql`
 type Query {
   allUsers: [User!]!
   recipesForUser(userId:ID!): [UserRecipes]
-  fetchRecipesFromSpoonacular(queryString:String):String
-  fetchRecipesFromSpoonacularById:[Recipes]
+  fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
+  fetchRecipesFromSpoonacularById(id:Int!):Recipes
   fetchRecipesFromSpoonacularInBulk:[Recipes]
 }
 type Mutation {
@@ -25,10 +25,13 @@ type UserRecipes {
   createdAt: String 
 }
 type Recipes {
-  property:String
-  prop2:String
-  prop3:String
-  prop4:String
+  instructions:String,
+  image:String,
+  sourceUrl:String,
+  id: Int,
+  title:String,  
+  usedIngredientCount: Int,
+  missedIngredientCount: Int,
 }
 `;
 module.exports = typeDefs;

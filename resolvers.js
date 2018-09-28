@@ -26,28 +26,8 @@ const resolvers = {
       .sort({ 'updatedAt': 'desc' });
       return recipes.map(recipe=>recipe);
     },
-    //TODO = complete this
-    fetchRecipesFromSpoonacular : async (parent, {queryString}, context,info) => {
-      let recipes = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=20&ranking=1`, {
-        cache: 'no-cache', 
-        credentials: 'same-origin',
-        headers: { 'X-Mashape-Key': MASHAPE_KEY,
-                   'content-type': 'application/json' },
-        method: 'GET', 
-        mode: 'cors', 
-        redirect: 'follow', 
-        referrer: 'no-referrer', 
-        })
-        .then(results => {
-          console.log(results);
-          return results.json();
-        }).then(
-          function(json){
-            console.log(json);
-          }
-        );
-    console.log(recipes);
-  },
+   
+  
   fetchRecipesFromSpoonacular : async(parent, {queryString}, context,info) => {
    let recipes = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=20&ranking=1`, {
       cache: 'no-cache', 
@@ -59,17 +39,14 @@ const resolvers = {
       redirect: 'follow', 
       referrer: 'no-referrer', 
     })
-      .then(results => {
-        
-        return results.json();
-      }).then(results => {
-        console.log(results[0].title)
-      return results[0].title})
-      console.log(recipes)
-     
-    },
+      .then(results => results.json())
+      .then(JSONresults => JSONresults)
+      
+      return  recipes.map(recipe => recipe)
+  },
+     //TODO = complete this  
     fetchRecipesFromSpoonacularById : async (parent, {id}, context,info) => {
-    return fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`, {
+      let recipe = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`, {
           cache: 'no-cache', 
           credentials: 'same-origin',
           headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
@@ -79,11 +56,10 @@ const resolvers = {
           redirect: 'follow', 
           referrer: 'no-referrer', 
           })
-    .then(results => {
-      const newResults = results.json()
-      console.log(newResults[2].title)
-      
-      return 'String'} ) 
+    .then(results => results.json())
+    .then(JSONresults => JSONresults)
+    
+    return recipe; 
     },
     fetchRecipesFromSpoonacularInBulk: (parent, {idString}, context,info) => {
       return fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`, {
