@@ -6,7 +6,7 @@ type Query {
   recipesForUser(userId:ID!): [UserRecipes]
   fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
   fetchRecipesFromSpoonacularById(id:Int!):Recipes
-  fetchRecipesFromSpoonacularInBulk:[Recipes]
+  fetchRecipesFromSpoonacularInBulk(userId:ID!):[Recipes]
 }
 type Mutation {
   createUser(username: String!,password:String!): User!
@@ -32,6 +32,6 @@ type Recipes {
   title:String,  
   usedIngredientCount: Int,
   missedIngredientCount: Int,
-}
+  }
 `;
 module.exports = typeDefs;

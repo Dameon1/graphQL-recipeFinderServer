@@ -24,6 +24,7 @@ const resolvers = {
       const recipes = await Recipe.find()
       .where({userId})
       .sort({ 'updatedAt': 'desc' });
+      console.log(recipes);
       return recipes.map(recipe=>recipe);
     },
    
@@ -44,8 +45,9 @@ const resolvers = {
       
       return  recipes.map(recipe => recipe)
   },
-     //TODO = complete this  
+ 
     fetchRecipesFromSpoonacularById : async (parent, {id}, context,info) => {
+
       let recipe = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`, {
           cache: 'no-cache', 
           credentials: 'same-origin',
@@ -61,8 +63,19 @@ const resolvers = {
     
     return recipe; 
     },
-    fetchRecipesFromSpoonacularInBulk: (parent, {idString}, context,info) => {
-      return fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`, {
+ 
+    fetchRecipesFromSpoonacularInBulk: async (parent,{userId}, context,info) => {
+      const recipes = await Recipe.find().where({userId}).sort({ 'updatedAt': 'desc' })
+                            .then(recipes => recipes.map(recipe => recipe.recipeId));
+      let recipeBulkString="";
+      for (let i =0;i<recipes.length;i++){
+        if(recipes[i] !== undefined){
+        recipeBulkString += recipes[i]+",";
+      }}
+
+      let idString = recipeBulkString.slice(0,-1);
+       
+      let recipesToReturn = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`, {
                 cache: 'no-cache', 
               credentials: 'same-origin',
               headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
@@ -73,6 +86,8 @@ const resolvers = {
               referrer: 'no-referrer', 
               })
     .then(results => results.json())
+    .then(JSONresults => JSONresults);
+    return recipesToReturn;    
     },
   },
   Mutation: {
