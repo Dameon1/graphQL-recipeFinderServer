@@ -2,7 +2,7 @@
 
 module.exports = {
   PORT: process.env.PORT || 8080,
-  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN,
+  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
   MONGODB_URI:process.env.MONGODB_URI,
   TEST_DATABASE_URL: process.env.TEST_DATABASE_URL, 
   JWT_SECRET : process.env.JWT_SECRET,

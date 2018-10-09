@@ -29,12 +29,6 @@ if (require.main === module) {
       console.error('\n === Did you remember to start `mongod`? === \n');
       console.error(err);
     });
-
-  app.listen(PORT, function () {
-    console.info(`Server listening on ${this.address().port}`);
-  }).on('error', err => {
-    console.error(err);
-  });
 }
 
 
