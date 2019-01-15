@@ -19,7 +19,7 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', { skip:
 app.use(cors({ origin: CLIENT_ORIGIN }));
 
 if (require.main === module) {
-  mongoose.connect(MONGODB_URI)
+  mongoose.connect(MONGODB_URI,{ useNewUrlParser: true })
     .then(instance => {
       const conn = instance.connections[0];
       console.info(`Connected to: mongodb://${conn.host}:${conn.port}/${conn.name}`);

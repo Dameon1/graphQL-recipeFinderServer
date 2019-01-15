@@ -24,30 +24,30 @@ const resolvers = {
       const recipes = await Recipe.find()
       .where({userId})
       .sort({ 'updatedAt': 'desc' });
-      console.log(recipes);
       return recipes.map(recipe=>recipe);
-    },
-   
+    }, 
   
-  fetchRecipesFromSpoonacular : async(parent, {queryString}, context,info) => {
-   let recipes = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=20&ranking=1`, {
-      cache: 'no-cache', 
-      credentials: 'same-origin',
-      headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
-        'content-type': 'application/json' },
-      method: 'GET', 
-      mode: 'cors', 
-      redirect: 'follow', 
-      referrer: 'no-referrer', 
-    })
+    fetchRecipesFromSpoonacular : async(parent, {queryString}, context,info) => {
+      console.log(queryString.length)
+      if(queryString.length > 0) {
+      let recipes = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`, {
+        cache: 'no-cache', 
+        credentials: 'same-origin',
+        headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
+          'content-type': 'application/json' },
+        method: 'GET', 
+        mode: 'cors', 
+        redirect: 'follow', 
+        referrer: 'no-referrer', 
+      })    
       .then(results => results.json())
-      .then(JSONresults => JSONresults)
-      
+      .then(JSONresults => JSONresults);
       return  recipes.map(recipe => recipe)
-  },
+    }
+    return ["Working"];
+    },
  
     fetchRecipesFromSpoonacularById : async (parent, {id}, context,info) => {
-
       let recipe = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`, {
           cache: 'no-cache', 
           credentials: 'same-origin',
@@ -60,7 +60,7 @@ const resolvers = {
           })
     .then(results => results.json())
     .then(JSONresults => JSONresults)
-    
+    console.log(recipe.analyzedInstructions)
     return recipe; 
     },
  

@@ -1,11 +1,11 @@
 {
-  "name": "server",
+  "name": "graphql-recipefinderserver",
   "version": "1.0.0",
-  "description": "",
+  "description": "- A Recipe finder that allows you to see recipes based on the ingredints you have and lets you see\r   how many you are missing for the particular recipe.\r - Navigating to the ** (Where to find page) will reveal a layout of a welcome page where you can make an          account to get full features or continue on to the recipe finder itself for quick access.\r - On selecting a recipe you will get a soft view of the instructions and how to make the desired\r   recipe with instructional overview.\r - There is a link at the bottom of the page leading to an in-depth overview of the recipe which will\r   lead the user to a new page where a more in-depth view of the recipe is kept.\r - Created account users can keep track of saved recipes for quick access to get back to them , along with         removing them if they are no longer wanted.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,17 +18,17 @@
   },
   "homepage": "https://github.com/Dameon1/graphQL-recipeFinderServer#readme",
   "dependencies": {
-    "apollo-server": "^2.1.0",
+    "apollo-server": "^2.3.1",
     "bcryptjs": "^2.4.3",
-    "cors": "^2.8.4",
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
     "graphql": "^14.0.2",
-    "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.3.1",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.2",
     "morgan": "^1.9.1",
-    "node-fetch": "^2.2.0",
-    "nodemon": "^1.18.4",
+    "nodemon": "^1.18.9",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"

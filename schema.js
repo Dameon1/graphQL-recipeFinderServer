@@ -1,5 +1,5 @@
 'use strict';
-const {  gql } = require('apollo-server');
+const { gql } = require('apollo-server');
 const typeDefs = gql`
 type Query {
   allUsers: [User!]!
@@ -14,7 +14,7 @@ type Mutation {
   deleteRecipe(userId:String!,recipeId:Int):Recipes
   signInUser(username: String!,password:String!):User
 }
-type User{
+type User {
   username: String!
   id:String
   password:String 
@@ -28,10 +28,18 @@ type Recipes {
   instructions:String,
   image:String,
   sourceUrl:String,
-  id: Int,
+  id:Int,
   title:String,  
-  usedIngredientCount: Int,
-  missedIngredientCount: Int,
-  }
+  usedIngredientCount:Int,
+  missedIngredientCount:Int,
+  analyzedInstructions: [AnalyzedInstructions]
+}
+type AnalyzedInstructions {
+  steps: [Analyzed]
+}
+type Analyzed {
+  step:String
+}
+
 `;
 module.exports = typeDefs;
