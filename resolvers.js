@@ -100,6 +100,8 @@ const resolvers = {
       });      
       return user;     
     },
+
+
     signInUser: async (parent,{password ,username}, context,info) =>{
       let digest = await User.hashPassword(password);
       let user = await User
@@ -114,15 +116,25 @@ const resolvers = {
           });
       }
       let isValid = await user.validatePassword(password)
-      return isValid
+      if(isValid) return user
     })
       .catch(err => {
           if (err.reason === 'LoginError') {
             return false;
           }});
           console.log(user);
-         if (user) { return {username,password} }
-        },
+    const token = await jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+    context.res.cookie('token', token, {
+      httpOnly:true,
+      maxAge: 1000 * 60 * 60 *24 * 365,
+    });
+    
+    if (user) { return user }
+},
+
+
+
+
     saveRecipe: async (parent, { recipeId,userId }, context,info) => {
       const recipe = await Recipe.create({ recipeId, userId })
       return recipe

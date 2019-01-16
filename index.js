@@ -34,7 +34,18 @@ if (require.main === module) {
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: ({ req,res }) => ({req,res})
+  
+    // // get the user token from the headers
+    // const token = req.headers.authorization || '';
+    
+    // // try to retrieve a user with the token
+    // const user = getUser(token);
+    
+    // // add the user to the context
+    // return { user };
+
 });
 
 server.listen({ port: 4001 }).then(({ url }) => {
