@@ -33,6 +33,7 @@ if (require.main === module) {
 
 
 const server = new ApolloServer({
+  cors:false,
   typeDefs,
   resolvers,
   context: ({ req,res }) => ({req,res})
