@@ -1,8 +1,7 @@
-'use strict';
-const { gql } = require('apollo-server');
-const typeDefs = gql`
+
 type Query {
   allUsers: [User!]!
+  me:User!
   recipesForUser(userId:ID!): [UserRecipes]
   fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
   fetchRecipesFromSpoonacularById(id:Int!):Recipes
@@ -41,5 +40,4 @@ type Analyzed {
   step:String
 }
 
-`;
-module.exports = typeDefs;
+
