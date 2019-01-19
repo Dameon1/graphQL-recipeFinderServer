@@ -19,7 +19,8 @@ const Mutations = {
     context.response.cookie('token', token, {
       httpOnly:true,
       maxAge: 1000 * 60 * 60 *24 * 365,
-    });  
+    }); 
+    console.log(context.response.cookie) 
   console.log("135",user);
 
     return user;     
