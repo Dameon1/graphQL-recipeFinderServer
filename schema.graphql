@@ -11,12 +11,14 @@ type Mutation {
   createUser(username: String!,password:String!): User!
   saveRecipe(userId:String!,recipeId:Int): Recipes
   deleteRecipe(userId:String!,recipeId:Int):Recipes
-  signInUser(username: String!,password:String!):User
+  signInUser(username: String!,password:String!):User!
 }
 type User {
-  username: String!
-  id:String
-  password:String 
+  username: String! 
+  id:ID! 
+  password:String!
+  resetToken:String
+  resetTOkenExpiry: Float
 }
 type UserRecipes {
   _id:String!

@@ -9,17 +9,21 @@ const localAuth = passport.authenticate('local', options);
 const {JWT_SECRET,JWT_EXPIRY} = require('../config');
 
 const Mutations = {
-  createUser: async (parent,{password ,username}, context,info) => {
-   
+  createUser: async (parent,{password ,username}, context,info) => {   
     let digest = await User.hashPassword(password)
     let user = await User.create({
       username,
       password: digest,        
-    });      
+    });
+    const token = await jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+    context.response.cookie('token', token, {
+      httpOnly:true,
+      maxAge: 1000 * 60 * 60 *24 * 365,
+    });  
+  console.log("135",user);
+
     return user;     
   },
-
-
   signInUser: async (parent,{password ,username}, context,info) =>{
     let digest = await User.hashPassword(password);
     let user = await User
@@ -40,7 +44,7 @@ const Mutations = {
         if (err.reason === 'LoginError') {
           return false;
         }});
-        console.log("135",user);
+  console.log("135",user);
   const token = await jwt.sign({ userId: user.id }, process.env.APP_SECRET)
   context.response.cookie('token', token, {
     httpOnly:true,
