@@ -1,7 +1,7 @@
 
 type Query {
   allUsers: [User!]!
-  me:User!
+  me: User
   recipesForUser(userId:ID!): [UserRecipes]
   fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
   fetchRecipesFromSpoonacularById(id:Int!):Recipes
@@ -15,7 +15,7 @@ type Mutation {
 }
 type User {
   username: String! 
-  id:ID! 
+  id:ID 
   password:String!
   resetToken:String
   resetTOkenExpiry: Float

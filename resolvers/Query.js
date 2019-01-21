@@ -18,12 +18,17 @@ const Query = {
       return user;
     });
   },
-  me(parent, args, ctx, info){
+
+  me: (parent, args, ctx, info) => {
     if(!ctx.request.userId) {
+      console.log("nothing")
       return null;
     }
-    return User.find({ id : ctx.request.userId } , info) 
-  }, 
+    const user = User.findById(ctx.request.userId);
+    console.log("USER----------------------- \n",user);
+    return User.findById(ctx.request.userId) 
+  },
+
   recipesForUser: async (parent, {userId}, context,info) => {
     const recipes = await Recipe.find()
     .where({userId})
