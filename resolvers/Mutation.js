@@ -20,10 +20,9 @@ const Mutations = {
       httpOnly:true,
       maxAge: 1000 * 60 * 60 *24 * 365,
     });
-    console.log(token)
     return user;     
   },
-  signInUser: async (parent,{password ,username}, context,info) =>{
+  signInUser: async (parent,{password ,username}, context,info) => {
     let digest = await User.hashPassword(password);
     let user = await User
     .findOne({ username })
@@ -43,17 +42,18 @@ const Mutations = {
         if (err.reason === 'LoginError') {
           return false;
         }});
-  console.log("135",user);
-  const token = await jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-  context.response.cookie('token', token, {
-    httpOnly:true,
-    maxAge: 1000 * 60 * 60 *24 * 365,
-  });  
-  if (user) { return user }
-},
+    const token = await jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+    context.response.cookie('token', token, {
+      httpOnly:true,
+      maxAge: 1000 * 60 * 60 *24 * 365,
+    });  
+    if (user) { return user }
+  },
 
-
-
+  signOutUser: (parent, { recipeId,userId }, context,info) => {
+    context.response.clearCookie('token');
+    return { message: "Goodbye" }
+  },
 
   saveRecipe: async (parent, { recipeId,userId }, context,info) => {
     const recipe = await Recipe.create({ recipeId, userId })
