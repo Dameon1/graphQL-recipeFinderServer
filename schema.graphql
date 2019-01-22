@@ -2,17 +2,17 @@
 type Query {
   allUsers: [User!]!
   me: User
-  recipesForUser(userId:ID!): [UserRecipes]
+  recipesForUser: [UserRecipes]
   fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
   fetchRecipesFromSpoonacularById(id:Int!):Recipes
-  fetchRecipesFromSpoonacularInBulk(userId:ID!):[Recipes]
+  fetchRecipesFromSpoonacularInBulk:[Recipes]
 }
 type Mutation {
   createUser(username: String!,password:String!): User!
   signInUser(username: String!,password:String!):User!
   signOutUser: SuccessMessage
-  saveRecipe(userId:String!,recipeId:Int): Recipes
-  deleteRecipe(userId:String!,recipeId:Int):Recipes
+  saveRecipe(userId:String!,recipeId:Int): UserRecipes
+  deleteRecipe(userId:String!,recipeId:Int):Int
 }
 type User {
   username: String! 

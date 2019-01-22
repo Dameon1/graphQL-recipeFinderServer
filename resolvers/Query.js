@@ -11,7 +11,6 @@ const {JWT_SECRET,JWT_EXPIRY} = require('../config');
 
 const Query = {
   allUsers: async (parent, args, context,info) => {
-    // { _id: 123123, name: "whatever"}
     const users = await User.find();
     return users.map((user) => {
       user.id = user._id.toString();
@@ -21,23 +20,23 @@ const Query = {
 
   me: (parent, args, ctx, info) => {
     if(!ctx.request.userId) {
-      console.log("nothing")
       return null;
     }
     const user = User.findById(ctx.request.userId);
-    console.log("USER----------------------- \n",user);
     return User.findById(ctx.request.userId) 
   },
 
-  recipesForUser: async (parent, {userId}, context,info) => {
+  recipesForUser: async (parent, args, context,info) => {
+    const {userId} = context.request;
+    //console.log(context.request.userId)
     const recipes = await Recipe.find()
     .where({userId})
     .sort({ 'updatedAt': 'desc' });
+    console.log(recipes.map(recipe=>recipe))
     return recipes.map(recipe=>recipe);
   }, 
 
   fetchRecipesFromSpoonacular : async(parent, {queryString}, context,info) => {
-    console.log(queryString.length)
     if(queryString.length > 0) {
     let recipes = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`, {
       cache: 'no-cache', 
@@ -53,7 +52,8 @@ const Query = {
     .then(JSONresults => JSONresults);
     return  recipes.map(recipe => recipe)
   }
-  return ["Working"];
+  console.log(recipes)
+  return recipes;
   },
 
   fetchRecipesFromSpoonacularById : async (parent, {id}, context,info) => {
@@ -69,14 +69,15 @@ const Query = {
         })
   .then(results => results.json())
   .then(JSONresults => JSONresults)
-  console.log(recipe.analyzedInstructions)
   return recipe; 
   },
 
-  fetchRecipesFromSpoonacularInBulk: async (parent,{userId}, context,info) => {
+  fetchRecipesFromSpoonacularInBulk: async (parent,args, context,info) => {
+    const {userId} = context.request;
     const recipes = await Recipe.find().where({userId}).sort({ 'updatedAt': 'desc' })
                           .then(recipes => recipes.map(recipe => recipe.recipeId));
     let recipeBulkString="";
+    console.log(recipes)
     for (let i =0;i<recipes.length;i++){
       if(recipes[i] !== undefined){
       recipeBulkString += recipes[i]+",";
@@ -96,6 +97,7 @@ const Query = {
             })
   .then(results => results.json())
   .then(JSONresults => JSONresults);
+  console.log(recipesToReturn)
   return recipesToReturn;    
   },
 }
