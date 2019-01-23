@@ -35,31 +35,32 @@ const Mutations = {
           location: 'username'
         });
     }
-    let isValid = await user.validatePassword(password)
-    if(isValid) return user
+    let isValid = await user.validatePassword(password);
+    if(isValid) return user;
   })
     .catch(err => {
         if (err.reason === 'LoginError') {
           return false;
         }});
-    const token = await jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+    const token = await jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     context.response.cookie('token', token, {
       httpOnly:true,
       maxAge: 1000 * 60 * 60 *24 * 365,
     });  
-    if (user) { return user }
+    if (user) { return user };
   },
 
   signOutUser: (parent, { recipeId,userId }, context,info) => {
     context.response.clearCookie('token');
-    return { message: "Goodbye" }
+    return { message: "Goodbye" };
   },
 
   saveRecipe: async (parent, { recipeId }, context,info) => {
     const {userId} = context.request;
-    const recipe = await Recipe.create({ recipeId, userId })
-    return recipe
+    const recipe = await Recipe.create({ recipeId, userId });
+    return recipe;
   },
+
   deleteRecipe: async (parent, {recipeId , userId }, context,info) => {
     const recipe = await Recipe.findOneAndRemove({recipeId:recipeId,userId})
     return recipe;
