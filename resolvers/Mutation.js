@@ -55,7 +55,8 @@ const Mutations = {
     return { message: "Goodbye" }
   },
 
-  saveRecipe: async (parent, { recipeId,userId }, context,info) => {
+  saveRecipe: async (parent, { recipeId }, context,info) => {
+    const {userId} = context.request;
     const recipe = await Recipe.create({ recipeId, userId })
     return recipe
   },

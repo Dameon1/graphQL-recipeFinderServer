@@ -57,13 +57,11 @@ change and make a pull request. I styled this app with the simplest of styles.
 ## Built With
 - [GraphQL](https://graphql.org/) - Server API
 - [React](https://github.com/gitname/react-gh-pages) - The web framework used
-- [Redux: Usage with React](https://redux.js.org/basics/usage-with-react) - State management
 - [Enzyme](https://airbnb.io/enzyme) - Testing framework
 - [JWT-decode](https://www.npmjs.com/package/jwt-decode) - Verification
 - [Mongo](https://www.mongodb.com) - The database used to store information
 - [Mongoose](http://mongoosejs.com/docs/guide.html) - Framework used to access DB
 - [Node.js](https://nodejs.org/en) - Runtime enviorment for package management
-- [Express.js](https://expressjs.com) - Framework used for the application
 - [bcrypt.js](https://www.npmjs.com/package/bcryptjs) - For security of user accounts
 
 ## Authors
@@ -76,5 +74,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-[Thinkful](https://www.thinkful.com/)
 [Spoonacular](https://spoonacular.com/)
