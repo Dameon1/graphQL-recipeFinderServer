@@ -1,4 +1,3 @@
-
 const User = require('../models/users');
 const Recipe = require ('../models/recipes');
 const jwt = require('jsonwebtoken');
@@ -10,29 +9,17 @@ const localAuth = passport.authenticate('local', options);
 const {JWT_SECRET,JWT_EXPIRY} = require('../config');
 
 const Query = {
-  allUsers: async (parent, args, context,info) => {
-    const users = await User.find();
-    return users.map((user) => {
-      user.id = user._id.toString();
-      return user;
-    });
-  },
-
-  me: (parent, args, ctx, info) => {
-    if(!ctx.request.userId) {
+  
+  me: (parent, args, context, info) => {
+    if(!context.request.userId) {
       return null;
     }
-    const user = User.findById(ctx.request.userId);
-    return User.findById(ctx.request.userId) 
+    return User.findById(context.request.userId) 
   },
 
   recipesForUser: async (parent, args, context,info) => {
     const {userId} = context.request;
-    //console.log(context.request.userId)
-    const recipes = await Recipe.find()
-    .where({userId})
-    .sort({ 'updatedAt': 'desc' });
-    console.log(recipes.map(recipe=>recipe))
+    const recipes = await Recipe.find().where({userId}).sort({ 'updatedAt': 'desc' });
     return recipes.map(recipe=>recipe);
   }, 
 
@@ -50,9 +37,9 @@ const Query = {
     })    
     .then(results => results.json())
     .then(JSONresults => JSONresults);
-    return  recipes.map(recipe => recipe)
+
+    return recipes.map(recipe => recipe)
   }
-  console.log(recipes)
   return recipes;
   },
 
@@ -68,7 +55,8 @@ const Query = {
         referrer: 'no-referrer', 
         })
   .then(results => results.json())
-  .then(JSONresults => JSONresults)
+  .then(JSONresults => JSONresults);
+
   return recipe; 
   },
 
@@ -77,28 +65,24 @@ const Query = {
     const recipes = await Recipe.find().where({userId}).sort({ 'updatedAt': 'desc' })
                           .then(recipes => recipes.map(recipe => recipe.recipeId));
     let recipeBulkString="";
-    console.log(recipes)
-    for (let i =0;i<recipes.length;i++){
+    for (let i = 0; i < recipes.length; i++){
       if(recipes[i] !== undefined){
       recipeBulkString += recipes[i]+",";
     }}
-
     let idString = recipeBulkString.slice(0,-1);
-     
     let recipesToReturn = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`, {
-              cache: 'no-cache', 
-            credentials: 'same-origin',
-            headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
-                       'content-type': 'application/json' },
-            method: 'GET', 
-            mode: 'cors', 
-            redirect: 'follow', 
-            referrer: 'no-referrer', 
-            })
-  .then(results => results.json())
-  .then(JSONresults => JSONresults);
-  console.log(recipesToReturn)
-  return recipesToReturn;    
+                                  cache: 'no-cache', 
+                                  credentials: 'same-origin',
+                                  headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
+                                            'content-type': 'application/json' },
+                                  method: 'GET', 
+                                  mode: 'cors', 
+                                  redirect: 'follow', 
+                                  referrer: 'no-referrer', 
+                                  })
+                                .then(results => results.json())
+                                .then(JSONresults => JSONresults);
+    return recipesToReturn;    
   },
 }
 

@@ -61,9 +61,10 @@ const Mutations = {
     return recipe;
   },
 
-  deleteRecipe: async (parent, {recipeId , userId }, context,info) => {
-    const recipe = await Recipe.findOneAndRemove({recipeId:recipeId,userId})
-    return recipe;
+  deleteRecipe: async (parent, {recipeId}, context,info) => {
+    const {userId} = context.request;
+    const recipe = await Recipe.findOneAndRemove({recipeId,userId})
+    return recipeId;
     }
   }
 

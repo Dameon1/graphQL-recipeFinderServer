@@ -4,7 +4,7 @@ type Query {
   me: User
   recipesForUser: [UserRecipes]
   fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
-  fetchRecipesFromSpoonacularById(id:Int!):Recipes
+  fetchRecipesFromSpoonacularById(id:Int):Recipes
   fetchRecipesFromSpoonacularInBulk:[Recipes]
 }
 type Mutation {
@@ -12,7 +12,7 @@ type Mutation {
   signInUser(username: String!,password:String!):User!
   signOutUser: SuccessMessage
   saveRecipe(recipeId:Int): UserRecipes
-  deleteRecipe(userId:String!,recipeId:Int):Int
+  deleteRecipe(recipeId:Int):Int
 }
 type User {
   username: String! 
