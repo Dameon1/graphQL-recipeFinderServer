@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-const { GraphQLServer } = require('graphql-yoga');
-const Mutation = require('./resolvers/Mutation');
-const Query = require('./resolvers/Query');
-const dbConnect = require('./db-mongoose');
+const { GraphQLServer } = require("graphql-yoga");
+const Mutation = require("./resolvers/Mutation");
+const Query = require("./resolvers/Query");
+const dbConnect = require("./db-mongoose");
 
 function createServer() {
   return new GraphQLServer({
-    typeDefs: "./schema.graphql",    
+    typeDefs: "./schema.graphql",
     resolvers: {
       Mutation,
       Query
@@ -18,6 +18,6 @@ function createServer() {
     },
     context: req => ({ ...req, dbConnect })
   });
-};
+}
 
 module.exports = createServer;

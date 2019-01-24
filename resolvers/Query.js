@@ -1,89 +1,102 @@
-const jwt = require('jsonwebtoken');
-const fetch = require('node-fetch');
-const User = require('../models/users');
-const Recipe = require ('../models/recipes');
-// const passport = require('passport');
-// const { Strategy: LocalStrategy } = require('passport-local');
-// const options = {session: false, failWithError: true};
-// const localAuth = passport.authenticate('local', options);
-// const {JWT_SECRET,JWT_EXPIRY} = require('../config');
+const fetch = require("node-fetch");
+const User = require("../models/users");
+const Recipe = require("../models/recipes");
 
 const Query = {
-  
   me: (parent, args, context, info) => {
-    if(!context.request.userId) {
+    if (!context.request.userId) {
       return null;
     }
-    return User.findById(context.request.userId) 
+    return User.findById(context.request.userId);
   },
 
-  recipesForUser: async (parent, args, context,info) => {
-    const {userId} = context.request;
-    const recipes = await Recipe.find().where({userId}).sort({ 'updatedAt': 'desc' });
-    return recipes.map(recipe=>recipe);
-  }, 
+  recipesForUser: async (parent, args, context, info) => {
+    const { userId } = context.request;
+    const recipes = await Recipe.find()
+      .where({ userId })
+      .sort({ updatedAt: "desc" });
+    return recipes.map(recipe => recipe);
+  },
 
-  fetchRecipesFromSpoonacular : async(parent, {queryString}, context,info) => {
-    if(queryString.length > 0) {
-    let recipes = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`, {
-      cache: 'no-cache', 
-      credentials: 'same-origin',
-      headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
-        'content-type': 'application/json' },
-      method: 'GET', 
-      mode: 'cors', 
-      redirect: 'follow', 
-      referrer: 'no-referrer', 
-    })    
-    .then(results => results.json())
-    .then(JSONresults => JSONresults);
+  fetchRecipesFromSpoonacular: async (parent, { queryString }, context, info) => {
+    if (queryString.length > 0) {
+      let recipes = await fetch(
+        `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
+        {
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "X-Mashape-Key": process.env.MASHAPE_KEY,
+            "content-type": "application/json"
+          },
+          method: "GET",
+          mode: "cors",
+          redirect: "follow",
+          referrer: "no-referrer"
+        }
+      )
+        .then(results => results.json())
+        .then(JSONresults => JSONresults);
 
-    return recipes.map(recipe => recipe)
+      return recipes.map(recipe => recipe);
+    }
+    return recipes;
+  },
+
+  fetchRecipesFromSpoonacularById: async (parent, { id }, context, info) => {
+    let recipe = await fetch(
+      `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`,
+      {
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "X-Mashape-Key": process.env.MASHAPE_KEY,
+          "content-type": "application/json"
+        },
+        method: "GET",
+        mode: "cors",
+        redirect: "follow",
+        referrer: "no-referrer"
+      }
+    )
+      .then(results => results.json())
+      .then(JSONresults => JSONresults);
+
+    return recipe;
+  },
+
+  fetchRecipesFromSpoonacularInBulk: async (parent, args, context, info) => {
+    const { userId } = context.request;
+    const recipes = await Recipe.find()
+      .where({ userId })
+      .sort({ updatedAt: "desc" })
+      .then(recipes => recipes.map(recipe => recipe.recipeId));
+    let recipeBulkString = "";
+    for (let i = 0; i < recipes.length; i++) {
+      if (recipes[i] !== undefined) {
+        recipeBulkString += recipes[i] + ",";
+      }
+    }
+    let idString = recipeBulkString.slice(0, -1);
+    let recipesToReturn = await fetch(
+      `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`,
+      {
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "X-Mashape-Key": process.env.MASHAPE_KEY,
+          "content-type": "application/json"
+        },
+        method: "GET",
+        mode: "cors",
+        redirect: "follow",
+        referrer: "no-referrer"
+      }
+    )
+      .then(results => results.json())
+      .then(JSONresults => JSONresults);
+    return recipesToReturn;
   }
-  return recipes;
-  },
-
-  fetchRecipesFromSpoonacularById : async (parent, {id}, context,info) => {
-    let recipe = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`, {
-        cache: 'no-cache', 
-        credentials: 'same-origin',
-        headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
-                'content-type': 'application/json' },
-        method: 'GET', 
-        mode: 'cors', 
-        redirect: 'follow', 
-        referrer: 'no-referrer', 
-        })
-  .then(results => results.json())
-  .then(JSONresults => JSONresults);
-
-  return recipe; 
-  },
-
-  fetchRecipesFromSpoonacularInBulk: async (parent,args, context,info) => {
-    const {userId} = context.request;
-    const recipes = await Recipe.find().where({userId}).sort({ 'updatedAt': 'desc' })
-                          .then(recipes => recipes.map(recipe => recipe.recipeId));
-    let recipeBulkString="";
-    for (let i = 0; i < recipes.length; i++){
-      if(recipes[i] !== undefined){
-      recipeBulkString += recipes[i]+",";
-    }}
-    let idString = recipeBulkString.slice(0,-1);
-    let recipesToReturn = await fetch(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`, {
-                                  cache: 'no-cache', 
-                                  credentials: 'same-origin',
-                                  headers: { 'X-Mashape-Key': process.env.MASHAPE_KEY,
-                                            'content-type': 'application/json' },
-                                  method: 'GET', 
-                                  mode: 'cors', 
-                                  redirect: 'follow', 
-                                  referrer: 'no-referrer', 
-                                  })
-                                .then(results => results.json())
-                                .then(JSONresults => JSONresults);
-    return recipesToReturn;    
-  },
-}
+};
 
 module.exports = Query;
