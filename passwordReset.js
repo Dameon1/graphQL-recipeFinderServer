@@ -1,3 +1,5 @@
+'use strict';
+//************** NOT BEING USED YET *****************/
 async resetPassword(parent, args, ctx, info){
   //1 Check that this is a legit resetToken
   //2 Check that it’s not expired

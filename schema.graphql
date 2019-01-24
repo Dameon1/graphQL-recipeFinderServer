@@ -1,6 +1,6 @@
 
 type Query {
-  allUsers: [User!]!
+  
   me: User
   recipesForUser: [UserRecipes]
   fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
@@ -46,5 +46,3 @@ type Analyzed {
 type SuccessMessage {
   message: String
 }
-
-

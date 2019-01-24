@@ -2,11 +2,11 @@
 const User = require('../models/users');
 const Recipe = require ('../models/recipes');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const { Strategy: LocalStrategy } = require('passport-local');
-const options = {session: false, failWithError: true};
-const localAuth = passport.authenticate('local', options);
-const {JWT_SECRET,JWT_EXPIRY} = require('../config');
+// const passport = require('passport');
+// const { Strategy: LocalStrategy } = require('passport-local');
+// const options = {session: false, failWithError: true};
+// const localAuth = passport.authenticate('local', options);
+// const {JWT_SECRET,JWT_EXPIRY} = require('../config');
 
 const Mutations = {
   createUser: async (parent,{password ,username}, context,info) => {   

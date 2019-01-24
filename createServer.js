@@ -12,6 +12,7 @@ function createServer() {
       Mutation,
       Query
     },
+    introspection: true,
     resolverValidationOptions: {
       requireResolversForResolveType: false
     },

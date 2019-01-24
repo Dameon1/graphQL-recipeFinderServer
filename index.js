@@ -4,14 +4,12 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-const { PORT, CLIENT_ORIGIN ,MONGODB_URI} = require('./config');
-const dbMongoose = require('./db-mongoose');
 const User = require('./models/users');
-
 const createServer = require('./createServer');
+const { MONGODB_URI} = require('./config');
+
 const server = createServer();
 
-//express middlware to handle cookies (JWT)
 server.express.use(cookieParser());
 
 server.express.use((req, res, next) => {

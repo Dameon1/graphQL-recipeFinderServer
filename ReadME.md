@@ -20,11 +20,11 @@ You can visit  [what2eat here](https://www.what2eat.website) !
 ## Instructions
 
 - The Sign up button at the top of the home page will lead you to a create an account form to enter your          details.
-- After signing up, you can pick from some predetermined ingredients in the checkboxes provided,
-  Or you can create your own, making the application more versitile for production.
-- Upon searching, the screen will be poplulated with recipes that closely match your desired inputs, with         recipe overviews that includes images of the disered outcom, also information including how many of your 
+- After signing up, you can pick from some predetermined ingredients in the check boxes provided,
+  Or you can create your own, making the application more versatile for production.
+- Upon searching, the screen will be populated with recipes that closely match your desired inputs, with         recipe overviews that includes images of the desired outcome, also information including how many of your 
   ingredients are used in the recipe and how many ingredients you are missing, with an option to go to the recipe overview.
-- At the recipe overview page , you will be greated you with a larger view of the recipe outcome picture
+- At the recipe overview page , you will be greeted you with a larger view of the recipe outcome picture
   along with a list of instructions and a save button if you want to keep it around for quick access.
 - Once you have saved a few recipes there is a separate page that keeps track of all the recipes you have
   saved in the MyRecipes link provide at the top of the page.
