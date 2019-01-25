@@ -1,6 +1,5 @@
 
-type Query {
-  
+type Query {  
   me: User
   recipesForUser: [UserRecipes]
   fetchRecipesFromSpoonacular(queryString:String!):[Recipes]
@@ -35,6 +34,7 @@ type Recipes {
   usedIngredientCount:Int,
   missedIngredientCount:Int,
   analyzedInstructions: [AnalyzedInstructions]
+  errorMessage: String
 }
 type AnalyzedInstructions {
   steps: [Analyzed]

@@ -40,7 +40,7 @@ const Query = {
 
       return recipes.map(recipe => recipe);
     }
-    return recipes;
+    return "recipes";
   },
 
   fetchRecipesFromSpoonacularById: async (parent, { id }, context, info) => {
