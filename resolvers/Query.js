@@ -18,7 +18,12 @@ const Query = {
     return recipes.map(recipe => recipe);
   },
 
-  fetchRecipesFromSpoonacular: async (parent, { queryString }, context, info) => {
+  fetchRecipesFromSpoonacular: async (
+    parent,
+    { queryString },
+    context,
+    info
+  ) => {
     if (queryString.length > 0) {
       let recipes = await fetch(
         `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
@@ -40,7 +45,7 @@ const Query = {
 
       return recipes.map(recipe => recipe);
     }
-    return "recipes";
+    return ["recipes"];
   },
 
   fetchRecipesFromSpoonacularById: async (parent, { id }, context, info) => {
@@ -76,6 +81,10 @@ const Query = {
       if (recipes[i] !== undefined) {
         recipeBulkString += recipes[i] + ",";
       }
+    }
+    //**** */HERE IS PROBLEM TO FIX
+    if (recipeBulkString.length === 0) {
+      return ["no recipes"];
     }
     let idString = recipeBulkString.slice(0, -1);
     let recipesToReturn = await fetch(
