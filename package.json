@@ -26,6 +26,7 @@
     "graphql-yoga": "^1.17.0",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.2",
+    "node-fetch": "^2.3.0",
     "nodemon": "^1.18.9"
   }
 }
