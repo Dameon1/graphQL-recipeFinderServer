@@ -29,14 +29,21 @@ const Mutations = {
       .then(async results => {
         let user = results;
         if (!user) {
-          return Promise.reject({
+          return {
             reason: "LoginError",
-            message: "Incorrect username",
+            message: "Invalid username",
             location: "username"
-          });
+          };
         }
         let isValid = await user.validatePassword(password);
-        if (isValid) return user;
+        if (!isValid) {
+          return {
+            reason: "LoginError",
+            message: "Invalid password",
+            location: "username"
+          };
+        }
+        return user;
       })
       .catch(err => {
         if (err.reason === "LoginError") {
