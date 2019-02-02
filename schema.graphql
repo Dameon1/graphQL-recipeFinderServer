@@ -7,7 +7,7 @@ type Query {
   fetchRecipesFromSpoonacularInBulk:[Recipes]
 }
 type Mutation {
-  createUser(username: String!,password:String!): User!
+  createUser(username: String!,password:String!): User
   signInUser(username: String!,password:String!):User
   signOutUser: SuccessMessage
   saveRecipe(recipeId:Int): UserRecipes
