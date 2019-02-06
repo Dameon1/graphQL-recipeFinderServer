@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const Mutations = {
   createUser: async (parent, { password, username }, context, info) => {
-    const taken = User.find({ username });
+    const taken = await User.findOne({ username });
+    
     if (taken) {
       return {
         reason: "LoginError",
