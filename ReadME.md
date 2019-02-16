@@ -15,7 +15,7 @@
 
 ## Where to find
 
-You can visit  [what2eat here](https://www.what2eat.website) !
+You can visit  [what2eat here](https://www.dameonmendoza.com/graphQL-recipeFinderClient/) !
 
 ## Instructions
 
@@ -32,9 +32,7 @@ You can visit  [what2eat here](https://www.what2eat.website) !
 
 ## Coding styles
 
--React was used for the components to display the various forms of information
-
--React-Redux was used for the management of the state
+TODO--Technologies and why
 
 ## Screenshots
 
@@ -56,7 +54,8 @@ change and make a pull request. I styled this app with the simplest of styles.
 
 ## Built With
 - [GraphQL](https://graphql.org/) - Server API
-- [React](https://github.com/gitname/react-gh-pages) - The web framework used
+- [Apollo](https://www.apollographql.com/) - State management.
+- [GraphQl-Yoga](https://github.com/prisma/graphql-yoga/blob/master/README.md) - GraphQL Server.
 - [Enzyme](https://airbnb.io/enzyme) - Testing framework
 - [JWT-decode](https://www.npmjs.com/package/jwt-decode) - Verification
 - [Mongo](https://www.mongodb.com) - The database used to store information
