@@ -4,7 +4,7 @@
 
 ## Application details
 
-- A Recipe finder that allows you to see recipes based on the ingredints you have and lets you see
+- A Recipe finder that allows you to see recipes based on the ingredients you have and lets you see
   how many you are missing for the particular recipe.
 - Navigating to the ** (Where to find page) will reveal a layout of a welcome page where you can make an          account to get full features or continue on to the recipe finder itself for quick access.
 - On selecting a recipe you will get a soft view of the instructions and how to make the desired
@@ -41,7 +41,6 @@ TODO--Technologies and why
 - On the right is the "search for" screen, where you can add and pick from options
 - The middle picture is an overview of what the search result will look like on a full sized screen
 
-<img align="left" width="200" height="300" src="/assets/images/singleRecipe.png">
 <img align="right" width="200" height="300" src="/assets/images/homescreen.png">
 <p align="center">
   <img width="600" height="520" src="/assets/images/searchedRecipes.png">
