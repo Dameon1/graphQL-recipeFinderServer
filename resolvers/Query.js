@@ -54,7 +54,7 @@ const Query = {
 
   fetchRecipesFromSpoonacularById: async (parent, { id }, context, info) => {
     let recipe = await fetch(
-      `https://poonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
       {
         cache: "no-cache",
         credentials: "same-origin",
