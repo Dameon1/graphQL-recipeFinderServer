@@ -55,7 +55,7 @@ const Query = {
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
-          "x-rapidapi-key": "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",,
+          "x-rapidapi-key": "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
           "content-type": "application/json"
         },
         method: "GET",
