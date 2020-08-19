@@ -50,12 +50,12 @@ const Query = {
 
   fetchRecipesFromSpoonacularById: async (parent, { id }, context, info) => {
     let recipe = await fetch(
-      `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`,
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
       {
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
-          "X-Mashape-Key": process.env.MASHAPE_KEY,
+          "x-rapidapi-key": "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",,
           "content-type": "application/json"
         },
         method: "GET",
@@ -88,12 +88,12 @@ const Query = {
     }
     let idString = recipeBulkString.slice(0, -1);
     let recipesToReturn = await fetch(
-      `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`,
+      `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=${idString}`,
       {
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
-          "X-Mashape-Key": process.env.MASHAPE_KEY,
+          "x-rapidapi-key": "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
           "content-type": "application/json"
         },
         method: "GET",
