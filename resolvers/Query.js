@@ -26,12 +26,12 @@ const Query = {
   ) => {
     if (queryString.length > 0) {
       let recipes = await fetch(
-        `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
+        `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
         {
           cache: "no-cache",
           credentials: "same-origin",
           headers: {
-            "X-Mashape-Key": process.env.MASHAPE_KEY,
+            "x-rapidapi-key": "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
             "content-type": "application/json"
           },
           method: "GET",
