@@ -31,7 +31,9 @@ const Query = {
           cache: "no-cache",
           credentials: "same-origin",
           headers: {
-            "X-Mashape-Key": process.env.MASHAPE_KEY,
+            "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+            "x-rapidapi-key": "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
+            "useQueryString": true,
             "content-type": "application/json"
           },
           method: "GET",
