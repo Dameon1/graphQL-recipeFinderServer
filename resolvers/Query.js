@@ -26,7 +26,7 @@ const Query = {
   ) => {
     if (queryString.length > 0) {
       let recipes = await fetch(
-        `spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
+        `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
         {
           cache: "no-cache",
           credentials: "same-origin",
