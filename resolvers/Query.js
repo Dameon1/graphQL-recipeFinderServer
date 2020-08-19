@@ -15,7 +15,7 @@ const Query = {
     const recipes = await Recipe.find()
       .where({ userId })
       .sort({ updatedAt: "desc" });
-    return recipes.map(recipe => recipe);
+    return recipes.map((recipe) => recipe);
   },
 
   fetchRecipesFromSpoonacular: async (
@@ -26,48 +26,53 @@ const Query = {
   ) => {
     if (queryString.length > 0) {
       let recipes = await fetch(
-        `spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
+        `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?fillIngredients=false&ingredients=${queryString}&limitLicense=false&number=5&ranking=1`,
         {
           cache: "no-cache",
           credentials: "same-origin",
           headers: {
-            	"x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-		          "x-rapidapi-key": "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
-		          "useQueryString": true,
-            "content-type": "application/json"
+            "x-rapidapi-host":
+              "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+            "x-rapidapi-key":
+              "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
+            useQueryString: true,
+            "content-type": "application/json",
           },
           method: "GET",
           mode: "cors",
           redirect: "follow",
-          referrer: "no-referrer"
+          referrer: "no-referrer",
         }
       )
-        .then(results => results.json())
-        .then(JSONresults => JSONresults);
+        .then((results) => results.json())
+        .then((JSONresults) => JSONresults);
 
-      return recipes.map(recipe => recipe);
+      return recipes.map((recipe) => recipe);
     }
     return ["recipes"];
   },
 
   fetchRecipesFromSpoonacularById: async (parent, { id }, context, info) => {
     let recipe = await fetch(
-      `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${id}/information`,
+      `https://poonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
       {
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
-          "X-Mashape-Key": process.env.MASHAPE_KEY,
-          "content-type": "application/json"
+          "x-rapidapi-host":
+            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+          "x-rapidapi-key":
+            "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
+          "content-type": "application/json",
         },
         method: "GET",
         mode: "cors",
         redirect: "follow",
-        referrer: "no-referrer"
+        referrer: "no-referrer",
       }
     )
-      .then(results => results.json())
-      .then(JSONresults => JSONresults);
+      .then((results) => results.json())
+      .then((JSONresults) => JSONresults);
 
     return recipe;
   },
@@ -77,7 +82,7 @@ const Query = {
     const recipes = await Recipe.find()
       .where({ userId })
       .sort({ updatedAt: "desc" })
-      .then(recipes => recipes.map(recipe => recipe.recipeId));
+      .then((recipes) => recipes.map((recipe) => recipe.recipeId));
     let recipeBulkString = "";
     for (let i = 0; i < recipes.length; i++) {
       if (recipes[i] !== undefined) {
@@ -90,24 +95,27 @@ const Query = {
     }
     let idString = recipeBulkString.slice(0, -1);
     let recipesToReturn = await fetch(
-      `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=${idString}`,
+      `https://poonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=${idString}`,
       {
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
-          "X-Mashape-Key": process.env.MASHAPE_KEY,
-          "content-type": "application/json"
+          "x-rapidapi-host":
+            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+          "x-rapidapi-key":
+            "S8G91YSWRNmshR1vTJgsVCYS4VdHp1sGM9PjsnEp50JoCghtfZ",
+          "content-type": "application/json",
         },
         method: "GET",
         mode: "cors",
         redirect: "follow",
-        referrer: "no-referrer"
+        referrer: "no-referrer",
       }
     )
-      .then(results => results.json())
-      .then(JSONresults => JSONresults);
+      .then((results) => results.json())
+      .then((JSONresults) => JSONresults);
     return recipesToReturn;
-  }
+  },
 };
 
 module.exports = Query;
